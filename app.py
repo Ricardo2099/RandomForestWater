@@ -55,3 +55,4 @@ def score(data: InputData) -> OutputData:
         prediccion=prediccion,
         probabilidad_potable=probabilidad,
     )
+
