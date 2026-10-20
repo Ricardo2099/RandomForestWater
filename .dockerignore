@@ -1,0 +1,11 @@
+.venv/
+__pycache__/
+*.pyc
+Watera.csv
+arbol_agua.py
+xgboost_agua.py
+random_forest_agua.py
+client.py
+README.md
+requirements.txt
+.git/
