@@ -31,3 +31,6 @@ jobs:
         run: python --version
       - name: pip install
         run: pip install -r requirements-docker.txt
+        
+      - name: train model
+        run: python random_forest_agua.py
