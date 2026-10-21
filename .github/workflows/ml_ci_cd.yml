@@ -2,12 +2,6 @@
 name: Modelops deploy
 
 on:
-  push:
-    branches: [master]
-
-  pull_request:
-    branches: [master]
-
   repository_dispatch:
     types: [ml_ci_cd]
 
@@ -29,14 +23,25 @@ jobs:
 
       - name: list
         run: python --version
+
       - name: pip install
         run: pip install -r requirements-docker.txt
-        
+
+      - name: download dataset
+        env:
+          DATASET_URL: ${{ github.event.client_payload.dataseturl }}
+        run: wget -O Watera.csv "$DATASET_URL"
+
+      - name: cat dataset
+        run: head -n 5 Watera.csv
+
       - name: train model
         run: python random_forest_agua.py
-        
+
       - name: docker build
-        run: docker build -t ${{ secrets.DOCKER_USER }}/${{ secrets.MODEL_NAME }}:${{ github.sha }} .
+        env:
+          IMAGE_TAG: ${{ github.event.client_payload.sha }}
+        run: docker build -t ${{ secrets.DOCKER_USER }}/${{ secrets.MODEL_NAME }}:$IMAGE_TAG .
 
       - name: show images
         run: docker images
@@ -48,4 +53,6 @@ jobs:
         run: echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USER" --password-stdin
 
       - name: docker push
-        run: docker push ${{ secrets.DOCKER_USER }}/${{ secrets.MODEL_NAME }}:${{ github.sha }}
+        env:
+          IMAGE_TAG: ${{ github.event.client_payload.sha }}
+        run: docker push ${{ secrets.DOCKER_USER }}/${{ secrets.MODEL_NAME }}:$IMAGE_TAG
