@@ -16,4 +16,3 @@ datos = {
 respuesta = requests.post(url, json=datos, timeout=10)
 respuesta.raise_for_status()
 print(respuesta.json())
-
