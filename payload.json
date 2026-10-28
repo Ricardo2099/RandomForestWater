@@ -1,0 +1,11 @@
+{
+  "ph": 7.0,
+  "hardness": 200.0,
+  "tds": 20000.0,
+  "chlorine": 7.0,
+  "sulfate": 330.0,
+  "conductivity": 420.0,
+  "organic_carbon": 14.0,
+  "trihalomethanes": 65.0,
+  "turbidity": 4.0
+}
